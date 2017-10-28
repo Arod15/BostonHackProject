@@ -22,14 +22,6 @@ client = Client(account_sid, auth_token)
 
 bot_num = "+16672399678"
 
-message = client.messages.create(
-        "+15558675309",
-        body="Jenny please?! I love you <3",
-        from_="+14158141829",
-        media_url="http://www.example.com/hearts.png")
-
-print(message.sid)
-
 # Some global variables
 age = 0
 female = false
