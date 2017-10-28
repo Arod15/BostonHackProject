@@ -37,7 +37,7 @@ symptoms = []
 #    return
 
 
-@app.route("/sms", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def background_check():
     resp = MessagingResponse()
     resp.message("Hello. First, we must do a quick background check.")
