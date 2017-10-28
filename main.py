@@ -2,15 +2,15 @@ from flask import render_template
 from flask import Flask, request, session
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
-import key.py
+from key import MY_ID, AUTH_KEY
 
 app = Flask(__name__)
 
-@app.route("/")
-def homepage():
-    return render_template("index.html")
-if __name__ == "__main__":
-    app.run(debug=true)
+# @app.route("/")
+# def homepage():
+#     return render_template("index.html")
+# if __name__ == "__main__":
+#     app.run(debug=True)
 
 
 # Your Account SID from twilio.com/console
@@ -24,8 +24,8 @@ bot_num = "+16672399678"
 
 # Some global variables
 year = 0
-female = false
-male = false
+female = False
+male = False
 symptoms = []
 
 #def sendSMS(text, user): #LOL dont need it Ashley will fix
@@ -37,7 +37,7 @@ symptoms = []
 #    return
 
 
-@app.route("/sms", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def background_check():
     resp = MessagingResponse()
     resp.message("Hello. First, we must do a quick background check.")
@@ -45,16 +45,17 @@ def background_check():
     resp.message("Are you biologically male or female?")
     print(str(resp))
 
-    gender_resp = request.values.get('Body', None)
+    
 
     gender_wait = True
     while gender_wait:
-        if body.lowercase == "female":
-            female = true
+        gender_resp = request.values.get('Body', None)
+        if gender_resp.lower() == "female":
+            female = True
             gender_wait = False
 
-        elif body.lowercase == "male":
-            male = true
+        elif gender_resp.lower() == "male":
+            male = True
             gender_wait = False
 
         else:
@@ -65,14 +66,19 @@ def background_check():
     print(str(resp))
 
 
-    year_resp = request.values.get('Body', None)
+    
 
     year_wait = True
     while year_wait:
-        if year > 1900:
-            year = year_resp
+        year_resp = request.values.get('Body', None)
+        if int(year_resp) > 1900:
+            year = int(year_resp)
             year_wait = False
 
         else:
             resp.message("The probability of you being that old is quite low. Please put a more realistic year.")
             print(str(resp))
+
+
+if __name__ == "__main__":
+     app.run(debug=True)
