@@ -41,7 +41,9 @@ symptoms = []
 def background_check():
     resp = MessagingResponse()
     resp.message("Hello. First, we must do a quick background check.")
+    print(str(resp))
     resp.message("Are you biologically male or female?")
+    print(str(resp))
 
     gender_resp = request.values.get('Body', None)
 
@@ -57,8 +59,11 @@ def background_check():
 
         else:
             resp.message("Please text \"male\" or \"female\.")
+            print(str(resp))
 
     resp.message("What year were you born?")
+    print(str(resp))
+
 
     year_resp = request.values.get('Body', None)
 
@@ -70,3 +75,4 @@ def background_check():
 
         else:
             resp.message("The probability of you being that old is quite low. Please put a more realistic year.")
+            print(str(resp))
