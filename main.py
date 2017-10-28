@@ -6,6 +6,13 @@ from key import MY_ID, AUTH_KEY
 
 app = Flask(__name__)
 
+# @app.route("/")
+# def homepage():
+#     return render_template("index.html")
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
+
 # Your Account SID from twilio.com/console
 account_sid = MY_ID
 # Your Auth Token from twilio.com/console
@@ -38,17 +45,15 @@ def background_check():
     resp.message("Are you biologically male or female?")
     print(str(resp))
 
-
-
     gender_wait = True
     while gender_wait:
         gender_resp = request.values.get('Body', None)
-        if gender_resp.toLowercase == "female":
-            female = true
+        if gender_resp.lower() == "female":
+            female = True
             gender_wait = False
 
-        elif gender_resp.toLowercase == "male":
-            male = true
+        elif gender_resp.lower() == "male":
+            male = True
             gender_wait = False
 
         else:
@@ -58,15 +63,16 @@ def background_check():
     resp.message("What year were you born?")
     print(str(resp))
 
-
-    year_resp = request.values.get('Body', None)
-
     year_wait = True
     while year_wait:
-        if year > 1900:
-            year = year_resp
+        year_resp = request.values.get('Body', None)
+        if int(year_resp) > 1900:
+            year = int(year_resp)
             year_wait = False
 
         else:
             resp.message("The probability of you being that old is quite low. Please put a more realistic year.")
             print(str(resp))
+
+if __name__ == "__main__":
+     app.run(debug=True)
