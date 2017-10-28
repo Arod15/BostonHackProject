@@ -23,32 +23,50 @@ client = Client(account_sid, auth_token)
 bot_num = "+16672399678"
 
 # Some global variables
-age = 0
+year = 0
 female = false
 male = false
 symptoms = []
 
+#def sendSMS(text, user): #LOL dont need it Ashley will fix
+#    message = client.messages.create(
+#        to=user,
+#        from_= bot_num,
+#        body=text)
+#    print(message.sid)
+#    return
 
-def sendSMS(text, user): #LOL dont need it Ashley will fix
-    message = client.messages.create(
-        to=user,
-        from_= bot_num,
-        body=text)
-    print(message.sid)
-    return
 
-def background_check(user):
-    sendSMS("Hello. First, we must do a quick background check.", user)
-    sendSMS("Are you biologically male or female?", user)
+@app.route("/sms", methods=['GET', 'POST'])
+def background_check():
+    resp = MessagingResponse()
+    resp.message("Hello. First, we must do a quick background check.")
+    resp.message("Are you biologically male or female?")
+
+    gender_resp = request.values.get('Body', None)
+
     gender_wait = True
     while gender_wait:
-        if input().lowercase == "female":
+        if body.lowercase == "female":
             female = true
             gender_wait = False
 
-        elif input().lowercase == "male":
+        elif body.lowercase == "male":
             male = true
             gender_wait = False
 
         else:
-            sendSMS("Please text \"male\" or \"female\.")
+            resp.message("Please text \"male\" or \"female\.")
+
+    resp.message("What year were you born?")
+
+    year_resp = request.values.get('Body', None)
+
+    year_wait = True
+    while year_wait:
+        if year > 1900:
+            year = year_resp
+            year_wait = False
+
+        else:
+            resp.message("The probability of you being that old is quite low. Please put a more realistic year.")
