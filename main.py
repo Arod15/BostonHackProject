@@ -38,10 +38,11 @@ def background_check():
     resp.message("Are you biologically male or female?")
     print(str(resp))
 
-    gender_resp = request.values.get('Body', None)
+
 
     gender_wait = True
     while gender_wait:
+        gender_resp = request.values.get('Body', None)
         if gender_resp.toLowercase == "female":
             female = true
             gender_wait = False
