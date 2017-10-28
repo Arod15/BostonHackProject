@@ -21,9 +21,12 @@ auth_token  = AUTH_KEY
 
 client = Client(account_sid, auth_token)
 
-message = client.messages.create(
-    to="+16672399678",
-    from_="+14108183657",
-    body="Hello from Python!")
+def sendSMSFromBot(text, user):
+    message = client.messages.create(
+        to=user,
+        from_= "+16672399678",
+        body=text)
+    print(message.sid)
+    return
 
-print(message.sid)
+def
