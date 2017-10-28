@@ -8,7 +8,7 @@ BostonHackProject uses the Twilio Messaging API to create a Symptom Checker, whi
 The actual health stuff is done with some _Google magic_. Messages are sent by POSTing to the Messages resource on the Twilio Platform.
 
 ## How do you use it?
-Simply send an SMS to +1(667)239-9678, and BostonHackProject will send back to the user three texts: 
+Simply send an SMS to +1(667) 239-9678, and BostonHackProject will send back to the user three texts: 
 - one text that reports the three most likeliest diseases or disorders
 - one text that states the suggested course of action the user should take
 - and one text that displays the accuracy of the information given.
