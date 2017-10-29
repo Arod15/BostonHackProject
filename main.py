@@ -43,8 +43,8 @@ def background_check():
     counter += 1
     session['counter'] = counter
     fr_num = request.values.get('From', None) # get_number
-    resp = request.values.get("Body", None) # get_firstmessage
-    check_in_dicnumb(fr_num) # checks if number is in dict
+    init_resp = request.values.get("Body", None) # get_firstmessage
+    check_in_dicnumb(fr_num, init_resp) # checks if number is in dict
     sendSMS("Hello. First, we must do a quick background check.", fr_num)
 <<<<<<< HEAD
     
