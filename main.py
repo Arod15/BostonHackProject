@@ -52,10 +52,9 @@ def background_check():
     resp = MessagingResponse()
     fr_num = request.values.get('From', None)
     sendSMS("Hello. First, we must do a quick background check.", fr_num)
-    print(str(resp))
-    resp = MessagingResponse()
+    
     sendSMS("Are you biologically male or female?", fr_num)
-    print(str(resp))
+    
 
     gender_wait = True
     while gender_wait:
