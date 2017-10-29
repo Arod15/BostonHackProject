@@ -31,13 +31,15 @@ female = False
 male = False
 symptoms = []
 
-#def sendSMS(text, user): #LOL dont need it Ashley will fix
-#    message = client.messages.create(
-#        to=user,
-#        from_= bot_num,
-#        body=text)
-#    print(message.sid)
-#    return
+def sendSMS(text, user): #LOL dont need it Ashley will fix
+    message = client.messages.create(
+        to=user,
+        from_= bot_num,
+        body=text)
+    print(message.sid)
+    resp = MessagingResponse()
+    resp.message(message)
+    return str(resp)
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -48,10 +50,11 @@ def background_check():
     session['counter'] = counter
 
     resp = MessagingResponse()
-    resp.message("Hello. First, we must do a quick background check.")
+    fr_num = request.values.get('From', None)
+    sendSMS("Hello. First, we must do a quick background check.", fr_num)
     print(str(resp))
     resp = MessagingResponse()
-    resp.message("Are you biologically male or female?")
+    sendSMS("Are you biologically male or female?", fr_num)
     print(str(resp))
 
     gender_wait = True
@@ -72,7 +75,7 @@ def background_check():
             print(str(resp))
 
     resp = MessagingResponse()
-    resp.message("What year were you born?")
+    sendSMS("What year were you born?", fr_num)
     print(str(resp))
 
     year_wait = True
