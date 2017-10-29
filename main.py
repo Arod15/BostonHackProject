@@ -31,8 +31,8 @@ def sendSMS(text, user): #LOL dont need it Ashley will fix
     print(message.sid)
 
 def check_in_dicnumb(number, message):
+    global dicnumb
     if number not in dicnumb.keys():
-        dicnumb += number
         dicnumb[number] = [message]
     else:
         dicnumb[number].append(message)
@@ -46,12 +46,10 @@ def background_check():
     init_resp = request.values.get("Body", None) # get_firstmessage
     check_in_dicnumb(fr_num, init_resp) # checks if number is in dict
     sendSMS("Hello. First, we must do a quick background check.", fr_num)
-<<<<<<< HEAD
-    
-=======
-    print(str(resp))
+
+    print(str(init_resp))
     # resp = MessagingResponse()
->>>>>>> cc49f6df0327bffbae53025b382160137b0505a8
+
     sendSMS("Are you biologically male or female?", fr_num)
     
 
@@ -68,9 +66,10 @@ def background_check():
             gender_wait = False
 
         else:
-            resp = MessagingResponse()
-            resp.message("Please text \"male\" or \"female\.")
+            
+            sendSMS("Please text \"male\" or \"female.\"", fr_num)
             print(str(resp))
+            gender_wait = False
 
     resp = MessagingResponse()
     sendSMS("What year were you born?", fr_num)
@@ -85,7 +84,7 @@ def background_check():
             year_wait = False
 
         else:
-            resp.message("The probability of you being that old is quite low. Please put a more realistic year.")
+            sendSMS("The probability of you being that old is quite low. Please put a more realistic year.", fr_num)
             print(str(resp))
 
 if __name__ == "__main__":
