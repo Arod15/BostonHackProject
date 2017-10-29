@@ -20,6 +20,7 @@ year = 0
 female = False
 male = False
 symptoms = []
+dicnumb = {}
 
 def sendSMS(text, user): #LOL dont need it Ashley will fix
     message = client.messages.create(
@@ -27,23 +28,25 @@ def sendSMS(text, user): #LOL dont need it Ashley will fix
         from_= bot_num,
         body=text)
     print(message.sid)
-    resp = MessagingResponse()
-    resp.message(message)
-    return str(resp)
 
+def check_in_dicnumb(number, message):
+    if number not in dicnumb.keys():
+        dicnumb += number
+        dicnumb[number] = [message]
+    else:
+        dicnumb[number].append(message)
 
 @app.route("/", methods=['GET', 'POST'])
 def background_check():
     counter = session.get('counter', 0)
     counter += 1
-
     session['counter'] = counter
-
-    resp = MessagingResponse()
-    fr_num = request.values.get('From', None)
+    fr_num = request.values.get('From', None) # get_number
+    resp = request.values.get("Body", None) # get_firstmessage
+    check_in_dicnumb(fr_num) # checks if number is in dict
     sendSMS("Hello. First, we must do a quick background check.", fr_num)
     print(str(resp))
-    resp = MessagingResponse()
+    # resp = MessagingResponse()
     sendSMS("Are you biologically male or female?", fr_num)
     print(str(resp))
 
@@ -77,7 +80,6 @@ def background_check():
             year_wait = False
 
         else:
-            resp = MessagingResponse()
             resp.message("The probability of you being that old is quite low. Please put a more realistic year.")
             print(str(resp))
 
@@ -85,4 +87,3 @@ if __name__ == "__main__":
      app.run(debug=True)
 # Get phone numbers
 # get_numbers = request.values.get("From", None)
-# get_messages = request.values.get("Body", None)
