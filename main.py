@@ -5,6 +5,7 @@ from twilio.rest import Client
 from key import MY_ID, AUTH_KEY
 
 app = Flask(__name__)
+app.secret_key = "test"
 
 # @app.route("/")
 # def homepage():
@@ -76,6 +77,7 @@ def background_check():
 
     year_wait = True
     while year_wait:
+        resp = MessagingResponse()
         year_resp = request.values.get('Body', None)
         if int(year_resp) > 1900:
             year = int(year_resp)
