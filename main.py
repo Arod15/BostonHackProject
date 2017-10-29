@@ -6,15 +6,6 @@ from key import MY_ID, AUTH_KEY
 
 app = Flask(__name__)
 
-# @app.route("/")
-# def homepage():
-#     return render_template("index.html")
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
-
-
-
 # Your Account SID from twilio.com/console
 account_sid = MY_ID
 # Your Auth Token from twilio.com/console
@@ -92,3 +83,6 @@ def background_check():
 
 if __name__ == "__main__":
      app.run(debug=True)
+# Get phone numbers
+# get_numbers = request.values.get("From", None)
+# get_messages = request.values.get("Body", None)
