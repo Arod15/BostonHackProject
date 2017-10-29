@@ -13,6 +13,8 @@ app = Flask(__name__)
 #     app.run(debug=True)
 
 
+
+
 # Your Account SID from twilio.com/console
 account_sid = MY_ID
 # Your Auth Token from twilio.com/console
@@ -39,14 +41,21 @@ symptoms = []
 
 @app.route("/", methods=['GET', 'POST'])
 def background_check():
+    counter = session.get('counter', 0)
+    counter += 1
+
+    session['counter'] = counter
+
     resp = MessagingResponse()
     resp.message("Hello. First, we must do a quick background check.")
     print(str(resp))
+    resp = MessagingResponse()
     resp.message("Are you biologically male or female?")
     print(str(resp))
 
     gender_wait = True
     while gender_wait:
+        resp = MessagingResponse()
         gender_resp = request.values.get('Body', None)
         if gender_resp.lower() == "female":
             female = True
@@ -57,9 +66,11 @@ def background_check():
             gender_wait = False
 
         else:
+            resp = MessagingResponse()
             resp.message("Please text \"male\" or \"female\.")
             print(str(resp))
 
+    resp = MessagingResponse()
     resp.message("What year were you born?")
     print(str(resp))
 
@@ -71,6 +82,7 @@ def background_check():
             year_wait = False
 
         else:
+            resp = MessagingResponse()
             resp.message("The probability of you being that old is quite low. Please put a more realistic year.")
             print(str(resp))
 
